@@ -22,7 +22,7 @@ def dijkstra(graph, start_vertex):
                         pq.put((new_cost, neighbor))
                         D[neighbor] = new_cost
     return D
-
+ 
 
 
 
