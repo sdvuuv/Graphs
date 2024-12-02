@@ -2,14 +2,16 @@ import random
 import graph
 
 class AntColony:
-    def __init__(self, graph, n_ants, n_iterations, alpha, beta, evaporation_rate, q=1):
-        self.graph = graph  # Граф на основе вашего класса
-        self.n_ants = n_ants  # Количество муравьев
+    def __init__(self, graph, n_iterations, n_ants, alpha, beta, evaporation_rate, q=1):
+        self.graph = graph  # Граф на основе класса
         self.n_iterations = n_iterations  # Количество итераций
+        self.n_ants = n_ants  # Количество муравьев
         self.alpha = alpha  # Влияние феромона
         self.beta = beta  # Коэфицент влияния весов или феромонов на выбор обхода
         self.evaporation_rate = evaporation_rate  # Коэффициент испарения
         self.q = q  # Константа для обновления феромона
+
+
         self.pheromones = [[1 for _ in range(graph.v)] for _ in range(graph.v)]  # Изначально одинаковый уровень феромона
 
     def run(self, start_vertex):
@@ -37,7 +39,7 @@ class AntColony:
             # Обновляем феромоны на основе найденных маршрутов
             self.update_pheromones(all_paths, all_path_lengths)
 
-        return best_path, best_path_length
+        return best_path, best_path_length, all_paths
 
     def construct_solution(self, start_vertex):
         """
@@ -78,7 +80,7 @@ class AntColony:
         # Рассчитываем вероятность перехода в каждую из соседних вершин
         for neighbor in range(self.graph.v):
             if neighbor not in visited and self.graph.edges[current_vertex][neighbor] > 0:
-                # Учитываем феромон и эвристику (обратное расстояние)
+                # Учитываем феромон 
                 pheromone = self.pheromones[current_vertex][neighbor] ** self.alpha
                 distance = (1 / self.graph.edges[current_vertex][neighbor]) ** self.beta
                 probabilities[neighbor] = pheromone * distance

@@ -1,7 +1,9 @@
 import graph
 import antcolony
+import filereading
 
-# Граф из презентации по муравьинному алгоритму 
+#g = filereading.read_file('1000.txt')
+# Задаем класс с муравьями 
 g = graph.Graph(6)
 
 # 1 с 2, 5
@@ -28,13 +30,14 @@ g.add_edge(5, 2, 3)
 g.add_edge(5, 3, 5)
 g.add_edge(5, 4, 4)
 
+colony = antcolony.AntColony(g, n_iterations=100, n_ants=10, alpha=1, beta=2, evaporation_rate=0.5)
+best_path, best_path_length, all_paths = colony.run(start_vertex=0)
 
 
-# Задаем класс с муравьями 
-colony = antcolony.AntColony(g, n_ants=10, n_iterations=100, alpha=1, beta=2, evaporation_rate=0.5)
-best_path, best_path_length = colony.run(start_vertex=0)
 
 print("Лучший путь:", best_path)
 print("Длина пути:", best_path_length)
+
+print("Все пути:", all_paths)
 
 
